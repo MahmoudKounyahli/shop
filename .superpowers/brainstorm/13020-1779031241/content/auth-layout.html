@@ -1,0 +1,85 @@
+<h2>Login / Register Page Layout</h2>
+<p class="subtitle">How should the auth pages look? Pick the layout that fits the Maison aesthetic best.</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="centered" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#fafafa; padding: 1.5rem;">
+      <div style="max-width: 300px; margin: 0 auto; font-family: sans-serif;">
+        <div style="text-align:center; margin-bottom: 1.5rem;">
+          <div style="font-family: serif; font-size: 1.4rem; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.25rem;">Maison</div>
+          <div style="font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: #666;">Sign in to your account</div>
+        </div>
+        <div style="border-bottom: 1px solid #ccc; padding: 0.5rem 0; margin-bottom: 0.75rem;">
+          <input style="border:none;background:none;width:100%;font-size:0.75rem;outline:none;color:#999;" placeholder="Email address" disabled />
+        </div>
+        <div style="border-bottom: 1px solid #ccc; padding: 0.5rem 0; margin-bottom: 1rem;">
+          <input style="border:none;background:none;width:100%;font-size:0.75rem;outline:none;color:#999;" placeholder="Password" disabled />
+        </div>
+        <div style="background:#000;color:#fff;text-align:center;padding:0.6rem;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.75rem;">Sign In</div>
+        <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem;">
+          <div style="flex:1;height:1px;background:#e0e0e0;"></div>
+          <span style="font-size:0.6rem;color:#999;">or</span>
+          <div style="flex:1;height:1px;background:#e0e0e0;"></div>
+        </div>
+        <div style="border:1px solid #ccc;text-align:center;padding:0.5rem;font-size:0.6rem;letter-spacing:0.1em;color:#444;">Continue with Google</div>
+        <div style="text-align:center;margin-top:0.75rem;font-size:0.6rem;color:#999;">No account? <span style="color:#000;text-decoration:underline;">Register</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Centered Form</h3>
+      <p>Minimal, full-page centered form. Clean white background. Fits the existing shop aesthetic perfectly.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="split" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#fafafa; padding: 1rem;">
+      <div style="display:flex; height: 180px; font-family: sans-serif; border: 1px solid #e0e0e0;">
+        <div style="flex:1; background:#111; display:flex; align-items:center; justify-content:center;">
+          <div style="color:#fff; font-family:serif; font-size:1.4rem; letter-spacing:0.2em; text-transform:uppercase; text-align:center;">
+            Maison<br/>
+            <span style="font-size:0.5rem; font-family:sans-serif; letter-spacing:0.2em; opacity:0.6;">NEW COLLECTION</span>
+          </div>
+        </div>
+        <div style="flex:1; padding: 1rem; display:flex; flex-direction:column; justify-content:center; gap: 0.5rem;">
+          <div style="font-size:0.6rem; letter-spacing:0.15em; text-transform:uppercase; color:#666; margin-bottom:0.25rem;">Sign in</div>
+          <div style="border-bottom:1px solid #ccc; padding: 0.3rem 0;"><span style="font-size:0.6rem; color:#bbb;">Email</span></div>
+          <div style="border-bottom:1px solid #ccc; padding: 0.3rem 0;"><span style="font-size:0.6rem; color:#bbb;">Password</span></div>
+          <div style="background:#000;color:#fff;text-align:center;padding:0.4rem;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;margin-top:0.25rem;">Sign In</div>
+          <div style="border:1px solid #ccc;text-align:center;padding:0.3rem;font-size:0.5rem;letter-spacing:0.1em;color:#555;">G — Google</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Split Screen</h3>
+      <p>Left: dark brand panel with editorial image. Right: form. Common in fashion e-commerce (ZARA, Mango). More visual impact.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="modal" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#f0f0f0; padding: 1rem; position:relative;">
+      <div style="filter:blur(1px); font-size: 0.5rem; color:#bbb; padding: 0.5rem; font-family:sans-serif; height:80px; overflow:hidden;">
+        <div style="height:8px;background:#e5e5e5;margin-bottom:4px;width:60%"></div>
+        <div style="height:8px;background:#e5e5e5;margin-bottom:4px;width:40%"></div>
+        <div style="display:flex;gap:4px;margin-top:8px;">
+          <div style="height:50px;width:40px;background:#ddd;"></div>
+          <div style="height:50px;width:40px;background:#ddd;"></div>
+          <div style="height:50px;width:40px;background:#ddd;"></div>
+        </div>
+      </div>
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;padding:1rem;width:160px;box-shadow:0 4px 24px rgba(0,0,0,0.15);font-family:sans-serif;">
+        <div style="font-family:serif;font-size:0.8rem;letter-spacing:0.1em;text-align:center;margin-bottom:0.5rem;">Sign in</div>
+        <div style="border-bottom:1px solid #ccc;padding:0.3rem 0;margin-bottom:0.4rem;"><span style="font-size:0.55rem;color:#bbb;">Email</span></div>
+        <div style="border-bottom:1px solid #ccc;padding:0.3rem 0;margin-bottom:0.5rem;"><span style="font-size:0.55rem;color:#bbb;">Password</span></div>
+        <div style="background:#000;color:#fff;text-align:center;padding:0.35rem;font-size:0.5rem;letter-spacing:0.1em;">SIGN IN</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Modal Overlay</h3>
+      <p>Appears over the current page — no full navigation. Keeps the user in context. Less focus, more friction for the register flow.</p>
+    </div>
+  </div>
+
+</div>
+
+<p style="margin-top: 1rem; font-size: 0.8rem; color: #666;">Click a card to select, then tell me in the terminal.</p>

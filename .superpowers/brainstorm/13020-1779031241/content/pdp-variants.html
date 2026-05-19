@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PDP Variants</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #f5f5f5; color: #000; padding: 28px 20px; }
+  h2 { font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 6px; }
+  p.subtitle { font-size: 12px; color: #666; margin-bottom: 28px; }
+
+  .option-block {
+    background: #fff; border: 2px solid transparent;
+    margin-bottom: 24px; cursor: pointer; transition: border-color 0.15s;
+  }
+  .option-block:hover { border-color: #ccc; }
+  .option-block.selected { border-color: #000; }
+  .option-label {
+    padding: 10px 16px; font-size: 10px; letter-spacing: 0.15em;
+    text-transform: uppercase; color: #666; border-bottom: 1px solid #eee;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .check { display:none; font-size:14px; color:#000; }
+  .option-block.selected .check { display:block; }
+  .desc { padding: 10px 16px 14px; font-size: 11px; color: #666; line-height: 1.5; }
+
+  /* PDP right panel */
+  .pdp-right { padding: 20px 24px; max-width: 340px; }
+  .product-brand { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #888; margin-bottom: 4px; }
+  .product-name { font-family: Georgia, serif; font-size: 20px; margin-bottom: 4px; }
+  .product-price { font-size: 15px; margin-bottom: 20px; }
+
+  .field-label {
+    font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: #666; margin-bottom: 10px; display: flex; justify-content: space-between;
+  }
+  .field-label span { color: #000; font-weight: 600; }
+
+  /* Color swatches */
+  .swatches { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+  .swatch {
+    width: 28px; height: 28px; border-radius: 50%; cursor: pointer;
+    border: 2px solid transparent; transition: border-color 0.15s;
+  }
+  .swatch.active { border-color: #000; outline: 2px solid #fff; outline-offset: -4px; }
+
+  /* Color name pills */
+  .color-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+  .color-pill {
+    padding: 6px 14px; border: 1px solid #e0e0e0; font-size: 10px;
+    letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; color: #555;
+  }
+  .color-pill.active { border-color: #000; color: #000; }
+
+  /* Color image thumbnails */
+  .color-thumbs { display: flex; gap: 8px; margin-bottom: 20px; }
+  .color-thumb {
+    width: 52px; cursor: pointer; border-bottom: 2px solid transparent;
+  }
+  .color-thumb.active { border-bottom-color: #000; }
+  .color-thumb img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; }
+  .color-thumb span { font-size: 9px; letter-spacing: 0.05em; text-transform: uppercase; color: #888; display: block; text-align: center; margin-top: 4px; }
+
+  /* Size pills */
+  .sizes { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+  .size-pill {
+    width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+    border: 1px solid #e0e0e0; font-size: 11px; cursor: pointer; color: #555;
+  }
+  .size-pill.active { border-color: #000; color: #000; }
+  .size-pill.sold-out { color: #ccc; border-color: #eee; text-decoration: line-through; cursor: default; }
+
+  .btn-cart {
+    width: 100%; background: #000; color: #fff; border: none;
+    padding: 14px; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer;
+    margin-bottom: 10px;
+  }
+  .btn-wishlist {
+    width: 100%; background: #fff; color: #000; border: 1px solid #000;
+    padding: 13px; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .divider-line { height: 1px; background: #eee; margin: 0 0 20px; }
+</style>
+<script>
+  function pick(el) {
+    document.querySelectorAll('.option-block').forEach(b => b.classList.remove('selected'));
+    el.classList.add('selected');
+    if (window.__companion) window.__companion.select(el.dataset.choice, el.querySelector('.option-label span:first-child').textContent);
+  }
+</script>
+</head>
+<body>
+
+<h2>Product Detail — Color Variant Selector</h2>
+<p class="subtitle">How does the user choose a color on the product page?</p>
+
+<!-- Option A: Color Swatches (circles) -->
+<div class="option-block" data-choice="a" onclick="pick(this)">
+  <div class="option-label"><span>A — Color Swatches (circles)</span><span class="check">✓</span></div>
+  <div class="pdp-right">
+    <p class="product-brand">Adidas</p>
+    <p class="product-name">Linen Straight Trousers</p>
+    <p class="product-price">$79</p>
+    <div class="divider-line"></div>
+    <div class="field-label">Color <span>Sand Beige</span></div>
+    <div class="swatches">
+      <div class="swatch active" style="background:#c8b89a;" title="Sand Beige"></div>
+      <div class="swatch" style="background:#2c2c2c;" title="Charcoal"></div>
+      <div class="swatch" style="background:#f5f5f0;" title="Off White"></div>
+      <div class="swatch" style="background:#8b6356;" title="Terracotta"></div>
+    </div>
+    <div class="field-label">Size <span>M</span></div>
+    <div class="sizes">
+      <div class="size-pill">XS</div><div class="size-pill">S</div>
+      <div class="size-pill active">M</div><div class="size-pill">L</div>
+      <div class="size-pill sold-out">XL</div>
+    </div>
+    <button class="btn-cart">Add to Bag</button>
+    <button class="btn-wishlist">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      Add to Wishlist
+    </button>
+  </div>
+  <p class="desc">Farbige Kreise — kompakt, schnell erkennbar. Gut wenn viele Farben. Tooltip zeigt den Farbnamen beim Hover.</p>
+</div>
+
+<!-- Option B: Image Thumbnails -->
+<div class="option-block" data-choice="b" onclick="pick(this)">
+  <div class="option-label"><span>B — Bild-Thumbnails pro Farbe</span><span class="check">✓</span></div>
+  <div class="pdp-right">
+    <p class="product-brand">Adidas</p>
+    <p class="product-name">Linen Straight Trousers</p>
+    <p class="product-price">$79</p>
+    <div class="divider-line"></div>
+    <div class="field-label">Color <span>Sand Beige</span></div>
+    <div class="color-thumbs">
+      <div class="color-thumb active">
+        <img src="https://picsum.photos/seed/c1/60/80" alt="Sand Beige"/>
+        <span>Beige</span>
+      </div>
+      <div class="color-thumb">
+        <img src="https://picsum.photos/seed/c2/60/80" alt="Charcoal"/>
+        <span>Charcoal</span>
+      </div>
+      <div class="color-thumb">
+        <img src="https://picsum.photos/seed/c3/60/80" alt="White"/>
+        <span>White</span>
+      </div>
+    </div>
+    <div class="field-label">Size <span>M</span></div>
+    <div class="sizes">
+      <div class="size-pill">XS</div><div class="size-pill">S</div>
+      <div class="size-pill active">M</div><div class="size-pill">L</div>
+      <div class="size-pill sold-out">XL</div>
+    </div>
+    <button class="btn-cart">Add to Bag</button>
+    <button class="btn-wishlist">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      Add to Wishlist
+    </button>
+  </div>
+  <p class="desc">Mini-Produktbilder pro Farbe — visuell am stärksten. User sieht sofort wie die Farbe am Produkt aussieht. Benötigt Bilder pro Variante im Backend.</p>
+</div>
+
+</body>
+</html>

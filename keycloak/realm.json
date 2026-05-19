@@ -1,0 +1,50 @@
+{
+  "realm": "maison",
+  "enabled": true,
+  "sslRequired": "none",
+  "registrationAllowed": true,
+  "loginWithEmailAllowed": true,
+  "registrationEmailAsUsername": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "editUsernameAllowed": false,
+  "loginTheme": "maison",
+  "clients": [
+    {
+      "clientId": "maison-angular",
+      "name": "Maison Frontend",
+      "enabled": true,
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "redirectUris": [
+        "http://localhost:4200/*",
+        "http://localhost/*"
+      ],
+      "webOrigins": [
+        "http://localhost:4200",
+        "http://localhost"
+      ],
+      "attributes": {
+        "post.logout.redirect.uris": "http://localhost:4200/*##http://localhost/*"
+      }
+    }
+  ],
+  "users": [
+    {
+      "username": "anna@example.com",
+      "email": "anna@example.com",
+      "firstName": "Anna",
+      "lastName": "Müller",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Test1234!",
+          "temporary": false
+        }
+      ]
+    }
+  ]
+}

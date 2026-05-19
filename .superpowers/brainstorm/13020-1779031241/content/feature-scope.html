@@ -1,0 +1,85 @@
+<h2>Features from Backend Schema</h2>
+<p class="subtitle">Select everything you want to add to the frontend. Deselect what's already good enough or out of scope.</p>
+
+<div class="section">
+  <p class="label">👤 User & Auth</p>
+  <div class="options" data-multiselect>
+    <div class="option" data-choice="login" onclick="toggleSelect(this)">
+      <div class="letter">1</div>
+      <div class="content">
+        <h3>Login Page <code>/login</code></h3>
+        <p>Email + password form. Link to register. "Continue as guest" option.</p>
+      </div>
+    </div>
+    <div class="option" data-choice="register" onclick="toggleSelect(this)">
+      <div class="letter">2</div>
+      <div class="content">
+        <h3>Register Page <code>/register</code></h3>
+        <p>First name, last name, email, password. Also "Sign up with Google" button.</p>
+      </div>
+    </div>
+    <div class="option" data-choice="account" onclick="toggleSelect(this)">
+      <div class="letter">3</div>
+      <div class="content">
+        <h3>Account Page <code>/account</code></h3>
+        <p>Profile info + saved addresses + order history.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <p class="label">🛍️ Product Catalog</p>
+  <div class="options" data-multiselect>
+    <div class="option" data-choice="brand" onclick="toggleSelect(this)">
+      <div class="letter">4</div>
+      <div class="content">
+        <h3>Brand Display</h3>
+        <p>Show brand name (e.g. "Adidas") on product cards and detail pages. Update model: add <code>brand</code> field.</p>
+      </div>
+    </div>
+    <div class="option" data-choice="variants" onclick="toggleSelect(this)">
+      <div class="letter">5</div>
+      <div class="content">
+        <h3>Product Variants (Color + Size)</h3>
+        <p>Products have variants with color, size, and price. Color selector on PDP. Images per color. Currently sizes are flat on the product — this is a bigger model change.</p>
+      </div>
+    </div>
+    <div class="option" data-choice="material" onclick="toggleSelect(this)">
+      <div class="letter">6</div>
+      <div class="content">
+        <h3>Material & Care Info</h3>
+        <p>Add <code>materialInfo</code> and <code>careInstructions</code> to the product detail accordion (already has "Details" section).</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <p class="label">❤️ Interaction</p>
+  <div class="options" data-multiselect>
+    <div class="option" data-choice="wishlist" onclick="toggleSelect(this)">
+      <div class="letter">7</div>
+      <div class="content">
+        <h3>Wishlist</h3>
+        <p>Heart icon on product cards + detail page. Wishlist page <code>/wishlist</code>. Saved per user (or local for guests).</p>
+      </div>
+    </div>
+    <div class="option" data-choice="reviews" onclick="toggleSelect(this)">
+      <div class="letter">8</div>
+      <div class="content">
+        <h3>Reviews & Ratings</h3>
+        <p>Star rating + comment section on product detail page. Submit a review (requires login). Show average rating on product cards.</p>
+      </div>
+    </div>
+    <div class="option" data-choice="savedaddress" onclick="toggleSelect(this)">
+      <div class="letter">9</div>
+      <div class="content">
+        <h3>Saved Addresses at Checkout</h3>
+        <p>If logged in, pre-fill shipping/billing address from saved addresses. Option to save a new address.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p style="margin-top: 1.5rem; font-size: 0.85rem; color: #666;">Click to select, click again to deselect. Select all that apply, then tell me in the terminal.</p>
