@@ -1,7 +1,7 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import Keycloak from 'keycloak-js';
-import { from, switchMap } from 'rxjs';
+import { catchError, from, of, switchMap } from 'rxjs';
 import { env } from '../config/env';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
@@ -13,6 +13,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     return next(req);
   }
   return from(keycloak.updateToken(5)).pipe(
+    catchError(() => of(false)),
     switchMap(() => {
       const token = keycloak.token;
       if (!token) {
