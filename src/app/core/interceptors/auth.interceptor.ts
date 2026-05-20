@@ -9,6 +9,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     return next(req);
   }
   const keycloak = inject(Keycloak);
+  console.log('[interceptor] authenticated:', keycloak.authenticated, '| token:', keycloak.token ? 'present' : 'missing');
   if (!keycloak.authenticated) {
     return next(req);
   }

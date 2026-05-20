@@ -37,6 +37,7 @@ services:
       KEYCLOAK_ADMIN_PASSWORD: admin
     ports:
       - "8090:8090"
+      - "8000:8000"
     depends_on:
       postgres:
         condition: service_healthy
@@ -90,6 +91,7 @@ services:
       KEYCLOAK_URL: /kc
       KEYCLOAK_REALM: maison
       KEYCLOAK_CLIENT_ID: maison-angular
+      API_URL: /api
     depends_on:
       keycloak:
         condition: service_healthy

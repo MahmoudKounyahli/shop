@@ -1,6 +1,7 @@
 import { Component, inject, input } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Product } from '../../../core/models/product.model';
+import { AuthService } from '../../../core/services/auth.service';
 import { WishlistService } from '../../../core/services/wishlist.service';
 import { BadgeComponent } from '../badge/badge';
 
@@ -59,6 +60,8 @@ import { BadgeComponent } from '../badge/badge';
 export class ProductCardComponent {
   product = input.required<Product>();
   wishlist = inject(WishlistService);
+  private auth = inject(AuthService);
+  private router = inject(Router);
 
   mainImageUrl(): string {
     const img = this.product().images.find(i => i.isMain) ?? this.product().images[0];
@@ -68,6 +71,10 @@ export class ProductCardComponent {
   toggleWishlist(event: Event): void {
     event.preventDefault();
     event.stopPropagation();
+    if (!this.auth.isLoggedIn()) {
+      this.router.navigate(['/auth']);
+      return;
+    }
     this.wishlist.toggle(this.product());
   }
 
