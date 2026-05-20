@@ -28,10 +28,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<Void> register(@Valid @RequestBody RegisterRequest req) {
         try {
-            // 1. Create user in Keycloak → get UUID
             String keycloakId = keycloakAdminService.createUser(req);
-
-            // 2. Immediately save to PostgreSQL
             User user = new User();
             user.setId(UUID.fromString(keycloakId));
             user.setFirstName(req.firstName());
@@ -39,13 +36,10 @@ public class AuthController {
             user.setEmail(req.email());
             user.setRegistrationDate(LocalDate.now());
             userRepository.save(user);
-
             return ResponseEntity.status(HttpStatus.CREATED).build();
-
         } catch (HttpClientErrorException.Conflict e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+        // any other exception propagates to GlobalExceptionHandler which logs it and returns 500
     }
 }

@@ -1,11 +1,16 @@
 package com.maison.shop.dto.order;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 
 public record PlaceOrderRequest(
-    List<OrderLineItem> items,
-    Long shippingAddressId,
-    Long billingAddressId
+    @NotNull @NotEmpty List<@Valid OrderLineItem> items,
+    @NotNull Long shippingAddressId,
+    @NotNull Long billingAddressId
 ) {
-    public record OrderLineItem(Long variantId, int quantity) {}
+    public record OrderLineItem(@NotNull Long variantId, @Min(1) int quantity) {}
 }

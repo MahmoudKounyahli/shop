@@ -29,22 +29,5 @@
         "post.logout.redirect.uris": "http://localhost:4200/*##http://localhost/*"
       }
     }
-  ],
-  "users": [
-    {
-      "username": "anna@example.com",
-      "email": "anna@example.com",
-      "firstName": "Anna",
-      "lastName": "Müller",
-      "enabled": true,
-      "emailVerified": true,
-      "credentials": [
-        {
-          "type": "password",
-          "value": "Test1234!",
-          "temporary": false
-        }
-      ]
-    }
   ]
 }

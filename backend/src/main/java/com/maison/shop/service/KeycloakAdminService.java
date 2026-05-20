@@ -2,12 +2,14 @@ package com.maison.shop.service;
 
 import com.maison.shop.dto.auth.RegisterRequest;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Map;
@@ -55,7 +57,7 @@ public class KeycloakAdminService {
             .toBodilessEntity();
 
         String location = response.getHeaders().getFirst("Location");
-        if (location == null) throw new RuntimeException("Keycloak did not return user location");
+        if (location == null) throw new ResponseStatusException(HttpStatus.BAD_GATEWAY, "Keycloak did not return user location");
         return location.substring(location.lastIndexOf('/') + 1);
     }
 

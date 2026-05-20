@@ -26,6 +26,13 @@ spring:
         jwt:
           jwk-set-uri: ${SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI:http://localhost:8080/realms/maison/protocol/openid-connect/certs}
 
+logging:
+  level:
+    org.springframework.security: WARN
+
+cors:
+  allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:4200,http://localhost}
+
 keycloak:
   admin:
     url: ${KEYCLOAK_INTERNAL_URL:http://keycloak:8080}
