@@ -1,12 +1,12 @@
-FROM maven:3.9-eclipse-temurin-21 AS builder
+FROM gradle:9.5-jdk21 AS builder
 WORKDIR /app
-COPY pom.xml .
-RUN mvn dependency:go-offline -q
+COPY build.gradle.kts settings.gradle.kts ./
+RUN gradle dependencies --no-daemon -q
 COPY src ./src
-RUN mvn package -DskipTests -q
+RUN gradle bootJar --no-daemon -q
 
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
-COPY --from=builder /app/target/*.jar app.jar
+COPY --from=builder /app/build/libs/*.jar app.jar
 EXPOSE 8090
 ENTRYPOINT ["java", "-jar", "app.jar"]
