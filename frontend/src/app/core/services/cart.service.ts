@@ -73,15 +73,18 @@ export class CartService {
   add(product: Product, variant: ProductVariant): void {
     this.http
       .post<CartItemDto>(`${env.apiUrl}/cart/items`, { variantId: Number(variant.id), quantity: 1 })
-      .subscribe(dto => {
-        const item = toCartItem(dto);
-        this._items.update(items => {
-          const existing = items.find(i => i.variantId === item.variantId);
-          if (existing) {
-            return items.map(i => i === existing ? { ...i, quantity: i.quantity + 1 } : i);
-          }
-          return [...items, item];
-        });
+      .subscribe({
+        next: dto => {
+          const item = toCartItem(dto);
+          this._items.update(items => {
+            const existing = items.find(i => i.variantId === item.variantId);
+            if (existing) {
+              return items.map(i => i === existing ? { ...i, quantity: i.quantity + 1 } : i);
+            }
+            return [...items, item];
+          });
+        },
+        error: err => console.error('[CartService] add failed:', err),
       });
   }
 
@@ -90,19 +93,26 @@ export class CartService {
       this.remove(variantId);
       return;
     }
+    const previous = this._items();
     this._items.update(items => items.map(i => i.variantId === variantId ? { ...i, quantity } : i));
     this.http
       .put<CartItemDto>(`${env.apiUrl}/cart/items/${variantId}`, { quantity })
-      .subscribe();
+      .subscribe({ error: () => this._items.set(previous) });
   }
 
   remove(variantId: string): void {
+    const previous = this._items();
     this._items.update(items => items.filter(i => i.variantId !== variantId));
-    this.http.delete<void>(`${env.apiUrl}/cart/items/${variantId}`).subscribe();
+    this.http
+      .delete<void>(`${env.apiUrl}/cart/items/${variantId}`)
+      .subscribe({ error: () => this._items.set(previous) });
   }
 
   clear(): void {
+    const previous = this._items();
     this._items.set([]);
-    this.http.delete<void>(`${env.apiUrl}/cart`).subscribe();
+    this.http
+      .delete<void>(`${env.apiUrl}/cart`)
+      .subscribe({ error: () => this._items.set(previous) });
   }
 }

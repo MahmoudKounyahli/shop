@@ -6,6 +6,7 @@ import com.maison.shop.domain.user.User;
 import com.maison.shop.domain.user.UserRepository;
 import com.maison.shop.dto.user.AddressDto;
 import com.maison.shop.dto.user.CreateAddressRequest;
+import com.maison.shop.dto.user.UpdateProfileRequest;
 import com.maison.shop.dto.user.UserDto;
 import com.maison.shop.service.UserSyncService;
 import jakarta.validation.Valid;
@@ -15,7 +16,6 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
@@ -34,45 +34,22 @@ public class UserController {
     @GetMapping("/me")
     public UserDto getMe(@AuthenticationPrincipal Jwt jwt) {
         User user = userSyncService.syncUser(jwt);
-        List<AddressDto> addresses = addressRepository.findByUserIdOrderById(user.getId()).stream()
-            .map(a -> new AddressDto(
-                a.getId(),
-                a.getStreet(),
-                a.getHouseNumber(),
-                a.getPostalCode(),
-                a.getCity(),
-                a.getCountry(),
-                a.getType() != null ? a.getType().name().toLowerCase() : null
-            ))
-            .toList();
-        return new UserDto(
-            user.getId().toString(),
-            user.getFirstName(),
-            user.getLastName(),
-            user.getEmail(),
-            user.getRegistrationDate(),
-            addresses
-        );
+        return toUserDto(user, fetchAddresses(user));
     }
 
     @PutMapping("/me")
-    public UserDto updateProfile(@AuthenticationPrincipal Jwt jwt, @RequestBody Map<String, String> body) {
+    public UserDto updateProfile(@AuthenticationPrincipal Jwt jwt, @Valid @RequestBody UpdateProfileRequest req) {
         User user = userSyncService.getUser(jwt);
-        if (body.containsKey("firstName")) user.setFirstName(body.get("firstName"));
-        if (body.containsKey("lastName")) user.setLastName(body.get("lastName"));
+        user.setFirstName(req.firstName());
+        user.setLastName(req.lastName());
         userRepository.save(user);
-        List<AddressDto> addresses = addressRepository.findByUserIdOrderById(user.getId()).stream()
-            .map(a -> new AddressDto(a.getId(), a.getStreet(), a.getHouseNumber(), a.getPostalCode(), a.getCity(), a.getCountry(), a.getType() != null ? a.getType().name().toLowerCase() : null))
-            .toList();
-        return new UserDto(user.getId().toString(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getRegistrationDate(), addresses);
+        return toUserDto(user, fetchAddresses(user));
     }
 
     @GetMapping("/me/addresses")
     public List<AddressDto> getAddresses(@AuthenticationPrincipal Jwt jwt) {
         User user = userSyncService.getUser(jwt);
-        return addressRepository.findByUserIdOrderById(user.getId()).stream()
-            .map(a -> new AddressDto(a.getId(), a.getStreet(), a.getHouseNumber(), a.getPostalCode(), a.getCity(), a.getCountry(), a.getType() != null ? a.getType().name().toLowerCase() : null))
-            .toList();
+        return fetchAddresses(user);
     }
 
     @PostMapping("/me/addresses")
@@ -87,15 +64,27 @@ public class UserController {
         address.setCity(req.city());
         address.setCountry(req.country());
         address.setType(req.type());
-        Address saved = addressRepository.save(address);
+        return toAddressDto(addressRepository.save(address));
+    }
+
+    private List<AddressDto> fetchAddresses(User user) {
+        return addressRepository.findByUserIdOrderById(user.getId()).stream()
+            .map(this::toAddressDto)
+            .toList();
+    }
+
+    private AddressDto toAddressDto(Address a) {
         return new AddressDto(
-            saved.getId(),
-            saved.getStreet(),
-            saved.getHouseNumber(),
-            saved.getPostalCode(),
-            saved.getCity(),
-            saved.getCountry(),
-            saved.getType() != null ? saved.getType().name().toLowerCase() : null
+            a.getId(), a.getStreet(), a.getHouseNumber(), a.getPostalCode(),
+            a.getCity(), a.getCountry(),
+            a.getType() != null ? a.getType().name().toLowerCase() : null
+        );
+    }
+
+    private UserDto toUserDto(User user, List<AddressDto> addresses) {
+        return new UserDto(
+            user.getId().toString(), user.getFirstName(), user.getLastName(),
+            user.getEmail(), user.getRegistrationDate(), addresses
         );
     }
 }

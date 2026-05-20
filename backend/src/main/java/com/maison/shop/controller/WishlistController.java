@@ -1,15 +1,16 @@
 package com.maison.shop.controller;
 
+import com.maison.shop.dto.wishlist.AddToWishlistRequest;
 import com.maison.shop.dto.wishlist.WishlistItemDto;
 import com.maison.shop.service.UserSyncService;
 import com.maison.shop.service.WishlistService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -31,8 +32,8 @@ public class WishlistController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public WishlistItemDto addItem(@AuthenticationPrincipal Jwt jwt, @RequestBody Map<String, Long> body) {
-        return wishlistService.addItem(userSyncService.getUser(jwt), body.get("productId"));
+    public WishlistItemDto addItem(@AuthenticationPrincipal Jwt jwt, @Valid @RequestBody AddToWishlistRequest req) {
+        return wishlistService.addItem(userSyncService.getUser(jwt), req.productId());
     }
 
     @DeleteMapping("/{productId}")

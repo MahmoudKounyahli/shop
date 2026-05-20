@@ -80,8 +80,8 @@ export class AuthService {
         email: profile.email ?? '',
         registrationDate: '',
       });
-    } catch (err) {
-      console.warn('[AuthService] loadProfile failed:', err);
+    } catch {
+      // profile unavailable — currentUser stays null, isLoggedIn remains keycloak-driven
     }
   }
 }

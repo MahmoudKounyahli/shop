@@ -21,10 +21,12 @@ export const routes: Routes = [
   {
     path: 'checkout',
     loadComponent: () => import('./pages/checkout/checkout').then(m => m.CheckoutComponent),
+    canActivate: [authGuard],
   },
   {
     path: 'order-confirmation',
     loadComponent: () => import('./pages/order-confirmation/order-confirmation').then(m => m.OrderConfirmationComponent),
+    canActivate: [authGuard],
   },
   {
     path: 'auth',

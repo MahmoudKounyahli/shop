@@ -4,6 +4,7 @@ import com.maison.shop.dto.order.OrderDto;
 import com.maison.shop.dto.order.PlaceOrderRequest;
 import com.maison.shop.service.OrderService;
 import com.maison.shop.service.UserSyncService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -31,7 +32,7 @@ public class OrderController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderDto placeOrder(@AuthenticationPrincipal Jwt jwt, @RequestBody PlaceOrderRequest req) {
+    public OrderDto placeOrder(@AuthenticationPrincipal Jwt jwt, @Valid @RequestBody PlaceOrderRequest req) {
         return orderService.placeOrder(userSyncService.getUser(jwt), req);
     }
 }
