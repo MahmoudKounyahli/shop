@@ -23,7 +23,7 @@ services:
   # ── Spring Boot Backend ───────────────────────────────────────────────────
   backend:
     image: shop-backend
-    pull_policy: missing
+    pull_policy: never
     container_name: maison-backend
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://maison-postgres:5432/maisondb
@@ -39,11 +39,6 @@ services:
     ports:
       - "8090:8090"
       - "8000:8000"
-    depends_on:
-      postgres:
-        condition: service_healthy
-      keycloak:
-        condition: service_healthy
     networks:
       - maison-net
 
@@ -72,15 +67,10 @@ services:
       - "8080:8080"
     networks:
       - maison-net
-    healthcheck:
-      test: ["CMD-SHELL", "curl -sf http://localhost:8080/health/ready || exit 1"]
-      interval: 10s
-      timeout: 5s
-      retries: 15
-      start_period: 40s
 
   # ── Angular Frontend ──────────────────────────────────────────────────────
   frontend:
+    pull_policy: never
     build:
       context: .
       dockerfile: Dockerfile
@@ -92,11 +82,6 @@ services:
       KEYCLOAK_REALM: maison
       KEYCLOAK_CLIENT_ID: maison-angular
       API_URL: /api
-    depends_on:
-      keycloak:
-        condition: service_healthy
-      backend:
-        condition: service_started
     networks:
       - maison-net
     healthcheck:
